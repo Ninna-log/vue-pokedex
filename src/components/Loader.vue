@@ -1,6 +1,6 @@
 <template>
   <div class="loader">
-    <img src="@/assets/loader.png" alt="loader">
+    <img src="@/assets/loader.png" alt="loader" />
   </div>
 </template>
 
@@ -20,10 +20,10 @@ export default {
 }
 .loader img {
   position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
   animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -64,5 +64,4 @@ export default {
     transform: scale(0.9);
   }
 }
-
 </style>
