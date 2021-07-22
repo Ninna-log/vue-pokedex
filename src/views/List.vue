@@ -30,25 +30,21 @@ export default {
     Loader
   },
   created() {
-    this.$store.dispatch("DO_BUSCAR_LISTA");
+    this.$store.dispatch("DO_CARGAR_LISTA");
   },
   methods: {
     handleAnimation: function(anim) {
       this.anim = anim;
     },
-
     stop: function() {
       this.anim.stop();
     },
-
     play: function() {
       this.anim.play();
     },
-
     pause: function() {
       this.anim.pause();
     },
-
     onSpeedChange: function() {
       this.anim.setSpeed(this.animationSpeed);
     }

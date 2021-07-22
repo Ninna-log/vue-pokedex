@@ -24,19 +24,23 @@ export default createStore({
     }
   },
   actions: {
+    [ACTIONS.DO_IS_LOADING](context, payload) {
+      context.commit(MUTATIONS.ON_IS_LOADING, payload);
+    },
     [ACTIONS.DO_BUSCAR_LISTA](context) {
-      context.commit('ON_IS_LOADING', true);
+      router.push({ name: 'List' })
+    },
+    [ACTIONS.DO_CARGAR_LISTA](context) {
+      context.commit('ON_IS_LOADING', true); 
       axios.get('https://pokeapi.co/api/v2/pokemon')
-      .then(response => {
-        let pokemons = response.data.results;
-        console.log(response.data.results);
-        context.commit('ON_BUSCAR_LISTA', pokemons);
-        context.commit('ON_IS_LOADING', false);
-        router.push({name: 'List'})
-      })
-      .catch(error => {
-        console.log(error);
-      })
+          .then(response => {
+            let pokemons = response.data.results;
+            console.log(pokemons);
+            context.commit('ON_BUSCAR_LISTA', pokemons);
+          })
+          .catch(error => {
+            console.log(error);
+          })           
     }
   },
   getters: {
