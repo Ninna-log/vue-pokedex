@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Welcome from '../views/Welcome.vue'
 import List from '../views/List.vue'
 import PokemonDetails from '../views/PokemonDetails.vue'
+import MensajeError from '../views/MensajeError.vue'
 
 const routes = [
   {
@@ -16,8 +17,13 @@ const routes = [
   },
   {
     path: '/pokemons/:id',
-    name: 'pokemonDetails',
+    name: 'PokemonDetails',
     component: PokemonDetails
+  },
+  {
+    path: '/error-list-result',
+    name: 'MensajeError',
+    component: MensajeError
   }
 ]
 

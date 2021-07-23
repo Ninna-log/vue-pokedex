@@ -13,6 +13,10 @@ export default createStore({
     },
     list: {
       pokemons: []
+    },
+    error: {
+      title: "Uh-oh!",
+      subtitle: "There was an error!"
     }
   },
   mutations: {
@@ -24,30 +28,23 @@ export default createStore({
     }
   },
   actions: {
+    [ACTIONS.DO_ERROR](context) {
+      router.push({ path: '/error-list-result' })
+    },
     [ACTIONS.DO_IS_LOADING](context, payload) {
       context.commit(MUTATIONS.ON_IS_LOADING, payload);
     },
     [ACTIONS.DO_BUSCAR_LISTA](context) {
       router.push({ name: 'List' })
-    },
-    [ACTIONS.DO_CARGAR_LISTA](context) {
-      context.commit('ON_IS_LOADING', true); 
-      axios.get('https://pokeapi.co/api/v2/pokemon')
-          .then(response => {
-            let pokemons = response.data.results;
-            console.log(pokemons);
-            context.commit('ON_BUSCAR_LISTA', pokemons);
-          })
-          .catch(error => {
-            console.log(error);
-          })           
     }
   },
   getters: {
+    isLoading: state => state.isLoading,
     title: state => state.welcome.title,
     subtitle: state => state.welcome.subtitle,
     pokemons: state => state.list.pokemons,
-    isLoading: state => state.isLoading
+    error1: state => state.error.title,
+    error2: state => state.error.subtitle
   },
   modules: {
   }

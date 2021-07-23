@@ -1,53 +1,68 @@
 <template>
-    <loader 
-      v-if="loading"
-      :options="defaultOptions"
-      :height="220"
-      :width="180"
-      v-on:animCreated="handleAnimation"
-    />
+  <loader
+    v-if="loading"
+    :options="defaultOptions"
+    :height="220"
+    :width="180"
+    v-on:animCreated="handleAnimation"
+  />
   <div class="list" v-if="!loading">
     <h1>This is an about page</h1>
-    <p v-for="(pokemon, index ) in pokemons" :key="index">{{ index }} - {{ pokemon.name }}</p>
+    <p v-for="(pokemon, index) in pokemons" :key="index">
+      {{ index }} - {{ pokemon.name }}
+    </p>
   </div>
 </template>
 
 <script>
-import Loader from '@/components/Loader.vue'
-import animationData from '@/assets/loader.png'
+import axios from "axios";
+import Loader from "@/components/Loader.vue";
+import animationData from "@/assets/loader.png";
 
 export default {
   name: "Welcome",
   data() {
     return {
-      pokemons: this.$store.getters.pokemons,
-      loading: this.$store.getters.isLoading,
+      pokemons: [],
+      loading: false,
       defaultOptions: { animationData: animationData },
-      animationSpeed: 1
-     };
+      animationSpeed: 1,
+    };
   },
   components: {
-    Loader
+    Loader,
   },
   created() {
-    this.$store.dispatch("DO_CARGAR_LISTA");
+    this.loading = true;
+    setTimeout(() => {
+      axios
+        .get("https://pokeapi.co/api/v2/pokemon")
+        .then((response) => {
+          this.pokemons = response.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$store.dispatch("DO_ERROR");
+        });
+      this.loading = false;
+    }, 5000);
   },
   methods: {
-    handleAnimation: function(anim) {
+    handleAnimation: function (anim) {
       this.anim = anim;
     },
-    stop: function() {
+    stop: function () {
       this.anim.stop();
     },
-    play: function() {
+    play: function () {
       this.anim.play();
     },
-    pause: function() {
+    pause: function () {
       this.anim.pause();
     },
-    onSpeedChange: function() {
+    onSpeedChange: function () {
       this.anim.setSpeed(this.animationSpeed);
-    }
+    },
   },
 };
 </script>
