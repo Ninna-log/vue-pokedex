@@ -38,7 +38,13 @@ export default {
       axios
         .get("https://pokeapi.co/api/v2/pokemon")
         .then((response) => {
-          this.pokemons = response.data.results;
+          if(response.status != "200") {
+            this.pokemons = response.data.results;
+            console.log(response);
+          } else {
+            this.$store.dispatch("DO_ERROR");
+          }
+          
         })
         .catch((error) => {
           console.log(error);
