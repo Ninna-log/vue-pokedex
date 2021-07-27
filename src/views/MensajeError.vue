@@ -1,6 +1,6 @@
 <template>
   <div>
-    <text-input></text-input>
+    <search-bar></search-bar>
     <h1>{{ title }}</h1>
     <h3>{{ subtitle }}</h3>
   </div>
@@ -9,7 +9,7 @@
 
 
 <script>
-import TextInput from "@/components/TextInput";
+import SearchBar from "@/components/SearchBar";
 import ButtonApp from "@/components/Button";
 
 export default {
@@ -21,7 +21,7 @@ export default {
     };
   },
   components: {
-    TextInput,
+    SearchBar,
     ButtonApp,
   },
   methods: {},

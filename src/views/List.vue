@@ -5,9 +5,11 @@
     :height="220"
     :width="180"
     v-on:animCreated="handleAnimation"
-  />
-  <div class="list" v-if="!loading">
-    <h1>This is an about page</h1>
+  />  
+  <div class="list" v-if="!loading">   
+    <search-bar
+    @clickSearch="searchPokemon"
+    ></search-bar> 
     <p v-for="(pokemon, index) in pokemons" :key="index">
       {{ index }} - {{ pokemon.name }}
     </p>
@@ -16,8 +18,9 @@
 
 <script>
 import axios from "axios";
-import Loader from "@/components/Loader.vue";
+import Loader from "@/components/Loader";
 import animationData from "@/assets/loader.png";
+import SearchBar from "@/components/SearchBar"
 
 export default {
   name: "Welcome",
@@ -31,6 +34,7 @@ export default {
   },
   components: {
     Loader,
+    SearchBar
   },
   created() {
     this.loading = true;
@@ -38,16 +42,9 @@ export default {
       axios
         .get("https://pokeapi.co/api/v2/pokemon")
         .then((response) => {
-          if(response.status != "200") {
-            this.pokemons = response.data.results;
-            console.log(response);
-          } else {
-            this.$store.dispatch("DO_ERROR");
-          }
-          
+          this.pokemons = response.data.results;
         })
         .catch((error) => {
-          console.log(error);
           this.$store.dispatch("DO_ERROR");
         });
       this.loading = false;
@@ -69,7 +66,13 @@ export default {
     onSpeedChange: function () {
       this.anim.setSpeed(this.animationSpeed);
     },
-  },
+    searchPokemon (query) {
+      if (query) {
+        const payload = { 'url': `https://pokeapi.co/api/v2/pokemon/${query}`, 'query': query }
+        this.$store.dispatch('DO_SEARCH_POKEMON', payload)
+      }
+    },
+  }
 };
 </script>
 
