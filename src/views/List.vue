@@ -9,7 +9,10 @@
   <div class="list" v-if="!loading">   
     <search-bar
     @clickSearch="searchPokemon"
-    ></search-bar> 
+    ></search-bar>     
+    <p>
+      {{ pokemon.name }}
+    </p>
     <p v-for="(pokemon, index) in pokemons" :key="index">
       {{ index }} - {{ pokemon.name }}
     </p>
@@ -49,6 +52,11 @@ export default {
         });
       this.loading = false;
     }, 5000);
+  },
+  computed: {
+    pokemon() {
+      return this.$store.getters.pokemon;
+    }
   },
   methods: {
     handleAnimation: function (anim) {
