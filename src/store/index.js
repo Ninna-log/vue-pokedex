@@ -87,6 +87,7 @@ export default createStore({
           context.commit(MUTATIONS.ON_SEARCH_POKEMON, pokemon);
         })
         .catch((error) => {
+          context.commit(MUTATIONS.ON_ERROR, true);
           console.log(error);
         });
     }
@@ -96,7 +97,7 @@ export default createStore({
       return state.isLoading
     },
     GET_ERROR: (state) => {
-      return state.error
+      return state.genericError
     },
     GET_POKEMONS: (state) => {
       return state.list.pokemons

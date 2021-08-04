@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid">
     <loader
-      v-if="loader"
+      v-if="loader && !error"
       :options="defaultOptions"
       :height="220"
       :width="180"
       v-on:animCreated="handleAnimation"
     />
-    <div class="list" v-if="!loader">
+    <div class="list" v-if="!loader && !error">
       <search-bar @clickSearch="searchPokemon" />
       <card 
         v-for="(pokemon, index) in pokemons"
@@ -15,6 +15,9 @@
         :pokemon="pokemon.name"
       />
     </div>
+    <error 
+      v-if="error"
+    />
   </div>
 </template>
 
@@ -24,6 +27,7 @@ import animationData from "@/assets/loader.png"
 import SearchBar from "@/components/SearchBar"
 import Card from "../components/Card.vue"
 import { mapGetters } from 'vuex'
+import Error from "../components/Error.vue"
 
 export default {
   name: "Welcome",
@@ -36,11 +40,13 @@ export default {
   components: {
     Loader,
     SearchBar,
-    Card
+    Card,
+    Error
   },  
   computed: {
     ...mapGetters({    
-        loader: 'GET_LOADING',    
+        loader: 'GET_LOADING',  
+        error: 'GET_ERROR',  
         pokemonList: 'GET_POKEMONS',
         currentPokemon: 'GET_POKEMON'
     }),
