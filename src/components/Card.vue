@@ -19,7 +19,9 @@ export default {
   },
   computed: {
       pokemonName() {
-          return this.pokemon;
+        let str2 = this.pokemon.charAt(0).toUpperCase() + this.pokemon.slice(1);
+        console.log(str2);
+        return str2
       }
   }
 };

@@ -14,21 +14,27 @@
 
 <script>
 import ButtonApp from "@/components/Button"
+import { mapGetters } from 'vuex'
 
 export default {
   name: "Welcome",
   data() {
     return {
-      title: this.$store.getters.title,
-      subtitle: this.$store.getters.subtitle,
+
     };
   },
   components: {
     ButtonApp
   },
+  computed: {
+    ...mapGetters({    
+        title: 'GET_TITLE',
+        subtitle: 'GET_SUBTITLE'
+    }),
+  },
   methods: {
     getStarted() {
-      this.$store.dispatch("DO_BUSCAR_LISTA");
+      this.$store.dispatch("DO_SEARCH_LIST");
     },
   },
 };

@@ -1,35 +1,34 @@
 <template>
   <div class="container-fluid">
     <loader
-      v-if="loading"
+      v-if="loader"
       :options="defaultOptions"
       :height="220"
       :width="180"
       v-on:animCreated="handleAnimation"
     />
-    <div class="list" v-if="!loading">
+    <div class="list" v-if="!loader">
       <search-bar @clickSearch="searchPokemon" />
-      <card v-for="(pokemon, index) in pokemons" :key="index"
-      :pokemon="pokemon.name"
+      <card 
+        v-for="(pokemon, index) in pokemons"
+        :key="index"
+        :pokemon="pokemon.name"
       />
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Loader from "@/components/Loader";
-import animationData from "@/assets/loader.png";
-import SearchBar from "@/components/SearchBar";
-import Card from "../components/Card.vue";
+import Loader from "@/components/Loader"
+import animationData from "@/assets/loader.png"
+import SearchBar from "@/components/SearchBar"
+import Card from "../components/Card.vue"
+import { mapGetters } from 'vuex'
 
 export default {
   name: "Welcome",
   data() {
     return {
-      pokemons: [],
-      currentPokemon: this.$store.getters.pokemon,
-      loading: false,
       defaultOptions: { animationData: animationData },
       animationSpeed: 1,
     };
@@ -38,25 +37,25 @@ export default {
     Loader,
     SearchBar,
     Card
+  },  
+  computed: {
+    ...mapGetters({    
+        loader: 'GET_LOADING',    
+        pokemonList: 'GET_POKEMONS',
+        currentPokemon: 'GET_POKEMON'
+    }),
+    pokemons() {
+      if(this.currentPokemon.name) {
+        let pokemon = []
+        pokemon.push(this.currentPokemon)
+        return pokemon
+      } else {
+        return this.pokemonList        
+      }
+    }
   },
   created() {
-    this.loading = true;
-    setTimeout(() => {
-      axios
-        .get("https://pokeapi.co/api/v2/pokemon")
-        .then((response) => {
-          this.pokemons = response.data.results;
-        })
-        .catch((error) => {
-          this.$store.dispatch("DO_ERROR");
-        });
-      this.loading = false;
-    }, 5000);
-  },
-  computed: {
-    pokemon() {
-      return this.pokemons = this.$store.getters.pokemon;
-    },
+    this.$store.dispatch("DO_SEARCH_POKEMONS");    
   },
   methods: {
     handleAnimation: function (anim) {
@@ -82,7 +81,7 @@ export default {
         };
         this.$store.dispatch("DO_SEARCH_POKEMON", payload);
       }
-    },
+    }
   },
 };
 </script>

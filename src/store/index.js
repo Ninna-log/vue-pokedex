@@ -14,29 +14,24 @@ export default createStore({
     list: {
       pokemons: []
     },
-    pokemon: {
-      abilities: [],
-      base_experience: "",
-      forms: [],
-      game_indices: [],
-      height: "",
-      held_items: [],
-      moves: [],
-      name: "",
-      stats: [],
-      types: [],
-      weight: ""
-    },
+    pokemon: {},
     error: {
       title: "Uh-oh!",
       subtitle: "There was an error!"
-    }
+    },
+    genericError: false
   },
   mutations: {
+    [MUTATIONS.ON_ERROR](state, payload) {
+      state.genericError = payload;
+    },
     [MUTATIONS.ON_IS_LOADING](state, payload) {
       state.isLoading = payload;
     },
-    [MUTATIONS.ON_BUSCAR_LISTA](state, payload) {
+    [MUTATIONS.ON_CLEAR_SEARCH] (state) {
+        state.pokemon = {}
+    },
+    [MUTATIONS.ON_SEARCH_POKEMONS](state, payload) {
       state.list.pokemons = payload;
     },
     [MUTATIONS.ON_SEARCH_POKEMON](state, payload) {
@@ -50,8 +45,26 @@ export default createStore({
     [ACTIONS.DO_IS_LOADING](context, payload) {
       context.commit(MUTATIONS.ON_IS_LOADING, payload);
     },
-    [ACTIONS.DO_BUSCAR_LISTA](context) {
+    [ACTIONS.DO_CLEAR_SEARCH](context) {
+      context.commit(MUTATIONS.ON_CLEAR_SEARCH);
+    },
+    [ACTIONS.DO_SEARCH_LIST](context) {
       router.push({ name: 'List' })
+    },
+    [ACTIONS.DO_SEARCH_POKEMONS](context, payload) {
+      context.commit(MUTATIONS.ON_IS_LOADING, true);
+      setTimeout(() => {
+        axios
+          .get("https://pokeapi.co/api/v2/pokemon")
+          .then((response) => {
+            let pokemons = response.data.results;
+            context.commit(MUTATIONS.ON_SEARCH_POKEMONS, pokemons);
+          })
+          .catch((error) => {
+            context.commit(MUTATIONS.ON_ERROR, true);
+          });
+        context.commit(MUTATIONS.ON_IS_LOADING, false);
+      }, 5000);
     },
     [ACTIONS.DO_SEARCH_POKEMON](context, payload) {
       axios
@@ -72,7 +85,6 @@ export default createStore({
             weight: pokemon.weight
           }
           context.commit(MUTATIONS.ON_SEARCH_POKEMON, pokemon);
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -80,13 +92,30 @@ export default createStore({
     }
   },
   getters: {
-    isLoading: state => state.isLoading,
-    title: state => state.welcome.title,
-    subtitle: state => state.welcome.subtitle,
-    pokemons: state => state.list.pokemons,
-    pokemon: state => state.pokemon,
-    error1: state => state.error.title,
-    error2: state => state.error.subtitle
+    GET_LOADING: (state) => {
+      return state.isLoading
+    },
+    GET_ERROR: (state) => {
+      return state.error
+    },
+    GET_POKEMONS: (state) => {
+      return state.list.pokemons
+    },
+    GET_POKEMON: (state) => {
+      return state.pokemon
+    },   
+    GET_TITLE: (state) => {
+      return state.welcome.title
+    },
+    GET_SUBTITLE: (state) => {
+      return state.welcome.subtitle
+    },
+    GET_ERROR1: (state) => {
+      return state.error.title
+    },
+    GET_ERROR2: (state) => {
+      return state.error.subtitle
+    }
   },
   modules: {
   }

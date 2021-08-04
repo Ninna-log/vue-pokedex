@@ -23,8 +23,14 @@ export default {
   },
   watch: {
     searchQuery: {
-      handler: _.debounce(function () {
+      handler: _.debounce(function (val) {
+        if (val === '') {
+          this.$store.commit('ON_CLEAR_SEARCH')
+        } else {
+          if (val !== this.newSearchQuery) {
             this.onClickSearch()
+          }
+        }
       }, 1500)
     },
     newSearchQuery (val) {
