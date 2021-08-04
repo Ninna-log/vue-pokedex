@@ -1,21 +1,18 @@
 <template>
-  <loader
-    v-if="loading"
-    :options="defaultOptions"
-    :height="220"
-    :width="180"
-    v-on:animCreated="handleAnimation"
-  />  
-  <div class="list" v-if="!loading">   
-    <search-bar
-    @clickSearch="searchPokemon"
-    ></search-bar>     
-    <p>
-      {{ pokemon.name }}
-    </p>
-    <p v-for="(pokemon, index) in pokemons" :key="index">
-      {{ index }} - {{ pokemon.name }}
-    </p>
+  <div class="container-fluid">
+    <loader
+      v-if="loading"
+      :options="defaultOptions"
+      :height="220"
+      :width="180"
+      v-on:animCreated="handleAnimation"
+    />
+    <div class="list" v-if="!loading">
+      <search-bar @clickSearch="searchPokemon" />
+      <card v-for="(pokemon, index) in pokemons" :key="index"
+      :pokemon="pokemon.name"
+      />
+    </div>
   </div>
 </template>
 
@@ -23,13 +20,15 @@
 import axios from "axios";
 import Loader from "@/components/Loader";
 import animationData from "@/assets/loader.png";
-import SearchBar from "@/components/SearchBar"
+import SearchBar from "@/components/SearchBar";
+import Card from "../components/Card.vue";
 
 export default {
   name: "Welcome",
   data() {
     return {
       pokemons: [],
+      currentPokemon: this.$store.getters.pokemon,
       loading: false,
       defaultOptions: { animationData: animationData },
       animationSpeed: 1,
@@ -37,7 +36,8 @@ export default {
   },
   components: {
     Loader,
-    SearchBar
+    SearchBar,
+    Card
   },
   created() {
     this.loading = true;
@@ -55,8 +55,8 @@ export default {
   },
   computed: {
     pokemon() {
-      return this.$store.getters.pokemon;
-    }
+      return this.pokemons = this.$store.getters.pokemon;
+    },
   },
   methods: {
     handleAnimation: function (anim) {
@@ -74,15 +74,21 @@ export default {
     onSpeedChange: function () {
       this.anim.setSpeed(this.animationSpeed);
     },
-    searchPokemon (query) {
+    searchPokemon(query) {
       if (query) {
-        const payload = { 'url': `https://pokeapi.co/api/v2/pokemon/${query}`, 'query': query }
-        this.$store.dispatch('DO_SEARCH_POKEMON', payload)
+        const payload = {
+          url: `https://pokeapi.co/api/v2/pokemon/${query}`,
+          query: query,
+        };
+        this.$store.dispatch("DO_SEARCH_POKEMON", payload);
       }
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
+.container-fluid {
+  width: 50%;
+}
 </style>

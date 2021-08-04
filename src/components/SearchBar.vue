@@ -1,5 +1,5 @@
 <template>
-  <div class="container float-container">
+  <div>
     <img src="@/assets/search-icon.png" alt="search-icon">
     <input
       ref="input"
@@ -55,14 +55,14 @@ input:focus {
     outline: none;
 }
 
-div.float-container {
+div {
   display: inline-table;
   background-color: #ffff;
   margin-top: 50px;
   box-shadow: 0 1px 8px 0 rgb(18 18 18 / 20%);
 }
 
-div.float-container.active label {
+div.active label {
   -webkit-transform: translate(16px, 8px) scale(0.75);
   transform: translate(16px, 8px) scale(0.75);
 }

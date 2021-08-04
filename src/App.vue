@@ -1,9 +1,20 @@
 <template>
-  <router-view/>
+  <router-view/>  
 </template>
 
 <script>
+import bootstrap from 'bootstrap';
 
+export default {
+  name: "Welcome",
+  data() {
+    return {      
+    };
+  },
+  components: {
+    bootstrap
+  }
+};
 </script>
 
 <style>
@@ -14,4 +25,6 @@
   text-align: center;
   color: #2c3e50;
 }
+
+@import'~bootstrap/dist/css/bootstrap.css'
 </style>
