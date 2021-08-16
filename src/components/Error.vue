@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <h1>{{ title }}</h1>
     <h3>{{ subtitle }}</h3>
-  </div>
-  <button-app class="button" label="Go back home"></button-app>
+    <button-app 
+      class="button" 
+      label="Go back home"
+      @click="goBack()"
+    >
+    </button-app>
+  </div>  
 </template>
 
 <script>
@@ -24,5 +29,16 @@ export default {
       subtitle: "GET_ERROR2",
     }),
   },
+  methods: {
+    goBack() {
+      this.$router.go('/list')
+    }
+  }
 };
 </script>
+
+<style scoped>
+.container-fluid {
+  margin-top: 7rem;
+}
+</style>

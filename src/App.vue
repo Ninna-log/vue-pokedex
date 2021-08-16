@@ -3,17 +3,9 @@
 </template>
 
 <script>
-import bootstrap from 'bootstrap';
 
 export default {
   name: "Welcome",
-  data() {
-    return {      
-    };
-  },
-  components: {
-    bootstrap
-  }
 };
 </script>
 

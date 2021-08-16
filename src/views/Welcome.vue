@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome">
+  <div class="container welcome">
     <div class="image">
       <img alt="pikachu" class="pikachu" src="../assets/mask-group.png" />
       <img alt="ellipse" class="ellipse" src="../assets/ellipse-10.png" />
@@ -68,6 +68,7 @@ export default {
   line-height: 31px;
   letter-spacing: 0em;
   text-align: center;
+  margin-top: revert;
 }
 .subtitle {
   color: #5e5e5e;
@@ -77,6 +78,7 @@ export default {
   line-height: 27px;
   letter-spacing: 0em;
   text-align: center;
+  margin: 16px 0;
 }
 .button {
   width: 145px;

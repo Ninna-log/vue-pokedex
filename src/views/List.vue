@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container">
     <loader
       v-if="loader && !error"
       :options="defaultOptions"
@@ -7,27 +7,30 @@
       :width="180"
       v-on:animCreated="handleAnimation"
     />
-    <div class="list" v-if="!loader && !error">
-      <search-bar @clickSearch="searchPokemon" />
-      <card 
+    <search-bar 
+      v-if="!loader && !error || !loader && error"
+      @clickSearch="searchPokemon" 
+    />
+    <div class="list" v-if="!loader && !error">      
+      <card
         v-for="(pokemon, index) in pokemons"
         :key="index"
         :pokemon="pokemon.name"
       />
     </div>
-    <error 
-      v-if="error"
-    />
+    <div class="error" v-if="error">
+      <error />
+    </div>
   </div>
 </template>
 
 <script>
-import Loader from "@/components/Loader"
-import animationData from "@/assets/loader.png"
-import SearchBar from "@/components/SearchBar"
-import Card from "../components/Card.vue"
-import { mapGetters } from 'vuex'
-import Error from "../components/Error.vue"
+import Loader from "@/components/Loader";
+import animationData from "@/assets/loader.png";
+import SearchBar from "@/components/SearchBar";
+import Card from "../components/Card.vue";
+import { mapGetters } from "vuex";
+import Error from "../components/Error.vue";
 
 export default {
   name: "Welcome",
@@ -41,27 +44,27 @@ export default {
     Loader,
     SearchBar,
     Card,
-    Error
-  },  
+    Error,
+  },
   computed: {
-    ...mapGetters({    
-        loader: 'GET_LOADING',  
-        error: 'GET_ERROR',  
-        pokemonList: 'GET_POKEMONS',
-        currentPokemon: 'GET_POKEMON'
+    ...mapGetters({
+      loader: "GET_LOADING",
+      error: "GET_ERROR",
+      pokemonList: "GET_POKEMONS",
+      currentPokemon: "GET_POKEMON",
     }),
     pokemons() {
-      if(this.currentPokemon.name) {
-        let pokemon = []
-        pokemon.push(this.currentPokemon)
-        return pokemon
+      if (this.currentPokemon.name) {
+        let pokemon = [];
+        pokemon.push(this.currentPokemon);
+        return pokemon;
       } else {
-        return this.pokemonList        
+        return this.pokemonList;
       }
-    }
+    },
   },
   created() {
-    this.$store.dispatch("DO_SEARCH_POKEMONS");    
+    this.$store.dispatch("DO_SEARCH_POKEMONS");
   },
   methods: {
     handleAnimation: function (anim) {
@@ -87,13 +90,13 @@ export default {
         };
         this.$store.dispatch("DO_SEARCH_POKEMON", payload);
       }
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-.container-fluid {
-  width: 50%;
+.container {
+  width: 70%;
 }
 </style>

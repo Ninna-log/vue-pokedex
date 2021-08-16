@@ -63,6 +63,7 @@ export default createStore({
           .catch((error) => {
             context.commit(MUTATIONS.ON_ERROR, true);
           });
+          context.commit(MUTATIONS.ON_ERROR, false);
         context.commit(MUTATIONS.ON_IS_LOADING, false);
       }, 5000);
     },
@@ -85,6 +86,7 @@ export default createStore({
             weight: pokemon.weight
           }
           context.commit(MUTATIONS.ON_SEARCH_POKEMON, pokemon);
+          context.commit(MUTATIONS.ON_ERROR, false);
         })
         .catch((error) => {
           context.commit(MUTATIONS.ON_ERROR, true);

@@ -3,8 +3,8 @@
       class="button"
       type="button"
       v-bind:style="{ backgroundColor: color, width: width, height: height }"
-      :value="label"
-    >{{ label }}</button>
+      :value="label"      
+  > {{ label }} </button>
 </template>
 
 <script>
@@ -18,6 +18,12 @@ export default {
     },
     width: String,
     height: String,
+  },
+  methods: {
+    goBack() {
+      if(this.label == 'Go back home')
+        this.$router.go(-1)
+    }
   }
 };
 </script>
