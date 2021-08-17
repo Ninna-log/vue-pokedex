@@ -12,12 +12,13 @@
       @clickSearch="searchPokemon" 
     />
     <div class="list" v-if="!loader && !error">      
-      <card
+      <card      
         v-for="(pokemon, index) in pokemons"
         :key="index"
         :pokemon="pokemon.name"
+        @click="showPokemon(pokemon.name)"
       />
-    </div>
+    </div>    
     <div class="error" v-if="error">
       <error />
     </div>
@@ -25,11 +26,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Loader from "@/components/Loader";
 import animationData from "@/assets/loader.png";
 import SearchBar from "@/components/SearchBar";
 import Card from "../components/Card.vue";
-import { mapGetters } from "vuex";
 import Error from "../components/Error.vue";
 
 export default {
@@ -38,13 +39,14 @@ export default {
     return {
       defaultOptions: { animationData: animationData },
       animationSpeed: 1,
+      show: false
     };
   },
   components: {
     Loader,
     SearchBar,
     Card,
-    Error,
+    Error
   },
   computed: {
     ...mapGetters({
@@ -90,7 +92,16 @@ export default {
         };
         this.$store.dispatch("DO_SEARCH_POKEMON", payload);
       }
-    },
+    },    
+    showPokemon(query) {
+      if (query) {
+        const payload = {
+          url: `https://pokeapi.co/api/v2/pokemon/${query}`,
+          query: query,
+        };
+        this.$store.dispatch("DO_SHOW_POKEMON", payload);
+      }
+    }
   },
 };
 </script>

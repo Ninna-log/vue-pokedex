@@ -15,6 +15,7 @@ export default createStore({
       pokemons: []
     },
     pokemon: {},
+    pokemonDetails: {},
     error: {
       title: "Uh-oh!",
       subtitle: "There was an error!"
@@ -28,14 +29,17 @@ export default createStore({
     [MUTATIONS.ON_IS_LOADING](state, payload) {
       state.isLoading = payload;
     },
-    [MUTATIONS.ON_CLEAR_SEARCH] (state) {
-        state.pokemon = {}
+    [MUTATIONS.ON_CLEAR_SEARCH](state) {
+      state.pokemon = {}
     },
     [MUTATIONS.ON_SEARCH_POKEMONS](state, payload) {
       state.list.pokemons = payload;
     },
     [MUTATIONS.ON_SEARCH_POKEMON](state, payload) {
       state.pokemon = payload;
+    },
+    [MUTATIONS.ON_SHOW_POKEMON](state, payload) {
+      state.pokemonDetails = payload;
     }
   },
   actions: {
@@ -57,13 +61,25 @@ export default createStore({
         axios
           .get("https://pokeapi.co/api/v2/pokemon")
           .then((response) => {
-            let pokemons = response.data.results;
+            let arrayPokemons = response.data.results;
+            let pokemons = []
+            console.log(arrayPokemons)
+            arrayPokemons.forEach(pokemon => {
+              pokemon = {
+                abilities: pokemon.abilities,
+                height: pokemon.height,
+                name: pokemon.name,
+                types: pokemon.types,
+                weight: pokemon.weight
+              }
+              pokemons.push(pokemon)
+            });
             context.commit(MUTATIONS.ON_SEARCH_POKEMONS, pokemons);
           })
           .catch((error) => {
             context.commit(MUTATIONS.ON_ERROR, true);
           });
-          context.commit(MUTATIONS.ON_ERROR, false);
+        context.commit(MUTATIONS.ON_ERROR, false);
         context.commit(MUTATIONS.ON_IS_LOADING, false);
       }, 5000);
     },
@@ -74,18 +90,32 @@ export default createStore({
           let pokemon = response.data;
           pokemon = {
             abilities: pokemon.abilities,
-            base_experience: pokemon.base_experience,
-            forms: pokemon.forms,
-            game_indices: pokemon.game_indices,
             height: pokemon.height,
-            held_items: pokemon.held_items,
-            moves: pokemon.moves,
             name: pokemon.name,
-            stats: pokemon.stats,
             types: pokemon.types,
             weight: pokemon.weight
           }
           context.commit(MUTATIONS.ON_SEARCH_POKEMON, pokemon);
+          context.commit(MUTATIONS.ON_ERROR, false);
+        })
+        .catch((error) => {
+          context.commit(MUTATIONS.ON_ERROR, true);
+          console.log(error);
+        });
+    },
+    [ACTIONS.DO_SHOW_POKEMON](context, payload) {
+      axios
+        .get(`${payload.url}`)
+        .then((response) => {
+          let pokemon = response.data;
+          pokemon = {
+            abilities: pokemon.abilities,
+            height: pokemon.height,
+            name: pokemon.name,
+            types: pokemon.types,
+            weight: pokemon.weight
+          }
+          context.commit(MUTATIONS.ON_SHOW_POKEMON, pokemon);
           context.commit(MUTATIONS.ON_ERROR, false);
         })
         .catch((error) => {
@@ -106,7 +136,10 @@ export default createStore({
     },
     GET_POKEMON: (state) => {
       return state.pokemon
-    },   
+    },
+    GET_POKEMON_DETAILS: (state) => {
+      return state.pokemonDetails
+    },
     GET_TITLE: (state) => {
       return state.welcome.title
     },
