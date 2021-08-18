@@ -8,13 +8,14 @@
           </div>
           <div class="modal-header" :class="labelAlign">
             <slot name="header">
-              <h3 class="modal-title">{{ currentPokemon.name }} - {{ currentPokemon.height }} - {{ currentPokemon.weight }}</h3>
+              <img src="@/assets/fondo.png" alt="fondo">
             </slot>
           </div>
 
           <div class="modal-content">
             <div class="modal-body" v-bind:class="{ scroll: bodyScroll }">
               <slot name="body">
+                <h3 class="modal-title">{{ currentPokemon.name }} - {{ currentPokemon.height }} - {{ currentPokemon.weight }}</h3>
                 <slot />
               </slot>
             </div>
@@ -261,8 +262,8 @@ div.close-container * {
     margin-bottom: 23px;
   }
   .modal-container {
-    width: 694px;
-    height: 340px;
+    width: 420px;
+    height: 520px;
   }
 
   .boton {

@@ -115,6 +115,7 @@ export default createStore({
             types: pokemon.types,
             weight: pokemon.weight
           }
+          console.log(pokemon)
           context.commit(MUTATIONS.ON_SHOW_POKEMON, pokemon);
           context.commit(MUTATIONS.ON_ERROR, false);
         })
