@@ -6,20 +6,22 @@
           <div class="close-container">
             <i class="fas fa-times-circle" @click="onClose"></i>
           </div>
-          <div class="modal-header" :class="labelAlign">
-            <slot name="header">
-              <img src="@/assets/fondo.png" alt="fondo">
-            </slot>
+          <div class="modal-header">
+            <img src="@/assets/fondo.png" alt="fondo" />
           </div>
 
           <div class="modal-content">
-            <div class="modal-body" v-bind:class="{ scroll: bodyScroll }">
-              <slot name="body">
-                <h3 class="modal-title">{{ currentPokemon.name }} - {{ currentPokemon.height }} - {{ currentPokemon.weight }}</h3>
-                <slot />
-              </slot>
+            <div class="modal-body">
+              <p>Name: {{ currentPokemon.name }}</p>
+              <hr />
+              <p>Weight: {{ currentPokemon.weight }}</p>
+              <hr />
+              <p>Height: {{ currentPokemon.height }}</p>
+              <hr />
+              <p>Types: {{ currentPokemon.types[0].type.name }}</p>
             </div>
           </div>
+          <button label="Share to my friends"/>
         </div>
       </div>
     </div>
@@ -27,18 +29,16 @@
 </template>
 
 <script>
+import Button from './Button.vue'
 import { mapGetters } from "vuex";
 
 export default {
   name: "ModalCustomComponent",
-  components: {},
+  components: {
+    Button
+  },
   props: {
     pokemon: String,
-    label: String,
-    labelAlign: {
-      type: String,
-      default: "center",
-    },
     bodyScroll: {
       type: Boolean,
       default: true,
@@ -94,7 +94,6 @@ export default {
 
 .modal-container {
   text-align: left;
-  padding: 40px;
   margin: 0px auto;
   background-color: #fff;
   border-radius: 2px;
@@ -124,6 +123,12 @@ export default {
   margin-top: 0;
 }
 
+.modal-header img {
+  overflow: hidden;
+  margin: -16px;
+  height: 225px;
+}
+
 .modal-header.center h3 {
   text-align: center;
 }
@@ -137,7 +142,8 @@ export default {
 .modal-body {
   margin: 20px 0;
   max-height: 200px;
-  margin-top: -15px;
+  width: 240px;
+  margin-left: 85px;
 }
 .modal-body.scroll {
   overflow-y: auto;
@@ -163,6 +169,11 @@ div.close-container {
 
 div.close-container * {
   cursor: pointer;
+}
+
+div.close-container i {
+  font-size: 25px;
+  color: #fff;
 }
 
 .modal-enter {
@@ -195,7 +206,6 @@ div.close-container * {
   }
 
   .modal-content {
-    padding: 16px;
     flex: 1; /* Stretch */
     min-height: 1%; /* Hack: fuerza al hijo flex a tener altura máxima dentro de su contenedor */
     scroll-behavior: smooth;
@@ -204,6 +214,8 @@ div.close-container * {
     line-height: 24px;
     color: black;
     text-align: center;
+    margin: auto !important;
+    width: 80% !important;
   }
 
   .modal-content form {
@@ -218,18 +230,16 @@ div.close-container * {
   }
 
   .modal-header {
-    padding: 0 16px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 0;
   }
 
   .modal-header h3 {
     font-size: 16px;
     font-family: BentonSansBBVA-Medium, Helvetica, Arial, sans-serif;
-    padding-top: 12px;
-    padding-bottom: 12px;
     margin-top: 0px;
     margin-bottom: 0px;
     width: 80%;
@@ -237,6 +247,10 @@ div.close-container * {
 
   .modal-header {
     box-shadow: 0 1px 0 0 #e9e9e9;
+  }
+
+  div.modal-header.center {
+    padding: 0;
   }
 
   div.close-container {
@@ -269,5 +283,10 @@ div.close-container * {
   .boton {
     width: 163px;
   }
+}
+
+.button {
+  width: 145px;
+  height: 60px;
 }
 </style>
