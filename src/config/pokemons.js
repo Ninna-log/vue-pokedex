@@ -1,29 +1,52 @@
-import pikachu from '..\assets\pokemons\pikachu.png'
-import bulbasaur from '..\assets\pokemons\bulbasaur.png'
-import blastoise from '..\assets\pokemons\blastoise.png'
-import butterfree from '..\assets\pokemons\butterfree.png'
-import caterpie from '..\assets\pokemons\caterpie.png'
-import charizard from '..\assets\pokemons\charizard.png'
-import charmander from '..\assets\pokemons\charmander.png'
-import charmeleon from '..\assets\pokemons\charmeleon.png'
-import ivysaur from '..\assets\pokemons\ivysaur.png'
-import metapod from '..\assets\pokemons\metapod.png'
-import squirtle from '..\assets\pokemons\squirtle.png'
-import venusaur from '..\assets\pokemons\venusaur.png'
-import wartortle from '..\assets\pokemons\wartortle.png'
-
-export let pokemons = {
-    pikachu,
-    bulbasaur,
-    blastoise,
-    butterfree,
-    caterpie,
-    charizard,
-    charmander,
-    charmeleon,
-    ivysaur,
-    metapod,
-    squirtle,
-    venusaur,
-    wartortle
+const pokemons = {
+    bulbasaur: '1',
+    ivysaur: '2',
+    venusaur: '3',
+    charmander: '4',
+    charmeleon: '5',
+    charizard: '6',
+    squirtle: '7',
+    wartortle: '8',
+    blastoise: '9',
+    caterpie: '10',
+    metapod: '11',
+    butterfree: '12', 
+    weedle: '13',
+    kakuna: '14',
+    beedrill: '15',
+    pidgey: '16',
+    pidgeotto: '17',
+    pidgeot: '18',
+    rattata: '19',
+    raticate: '20',
+    spearow: '21',
+    fearow: '22',
+    ekans: '23',
+    arbok: '24',
+    pikachu: '25',
+    raichu: '26',
+    sandshrew: '27',
+    sandslash: '28',
+    nidorina: '30',
+    nidoqueen: '31',
+    nidorino: '33',
+    nidoking: '34',
+    clefairy: '35',
+    clefable: '36',
+    vulpix: '37',
+    ninetables: '38',
+    jigglypuff: '39',
+    wigglytuff: '40',
+    zubat: '41',
+    golbat: '42',
+    oddish: '43',
+    gloom: '44',
+    vileplume: '45',
+    paras: '46',
+    parasect: '47',
+    venonat: '48',
+    venomoth: '49',
+    diglett: '50'
 }
+
+export { pokemons };

@@ -59,11 +59,10 @@ export default createStore({
       context.commit(MUTATIONS.ON_IS_LOADING, true);
       setTimeout(() => {
         axios
-          .get("https://pokeapi.co/api/v2/pokemon")
+          .get("https://pokeapi.co/api/v2/pokemon?limit=50")
           .then((response) => {
             let arrayPokemons = response.data.results;
             let pokemons = []
-            console.log(arrayPokemons)
             arrayPokemons.forEach(pokemon => {
               pokemon = {
                 abilities: pokemon.abilities,
@@ -78,6 +77,7 @@ export default createStore({
           })
           .catch((error) => {
             context.commit(MUTATIONS.ON_ERROR, true);
+            console.log(error)
           });
         context.commit(MUTATIONS.ON_ERROR, false);
         context.commit(MUTATIONS.ON_IS_LOADING, false);
@@ -115,7 +115,6 @@ export default createStore({
             types: pokemon.types,
             weight: pokemon.weight
           }
-          console.log(pokemon)
           context.commit(MUTATIONS.ON_SHOW_POKEMON, pokemon);
           context.commit(MUTATIONS.ON_ERROR, false);
         })

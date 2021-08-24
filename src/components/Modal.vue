@@ -7,21 +7,22 @@
             <i class="fas fa-times-circle" @click="onClose"></i>
           </div>
           <div class="modal-header">
-            <img src="@/assets/fondo.png" alt="fondo" />
+            <img class="fondo" src="@/assets/fondo.png" alt="fondo" />
+            <img class="pokemon" :src="pokemonImagen" alt="pokemon" />
           </div>
 
           <div class="modal-content">
             <div class="modal-body">
-              <p>Name: {{ currentPokemon.name }}</p>
+              <p>Name: {{ pokemonBody.name }}</p>
               <hr />
-              <p>Weight: {{ currentPokemon.weight }}</p>
+              <p>Weight: {{ pokemonBody.weight }}</p>
               <hr />
-              <p>Height: {{ currentPokemon.height }}</p>
+              <p>Height: {{ pokemonBody.height }}</p>
               <hr />
-              <p>Types: {{ currentPokemon.types[0].type.name }}</p>
+              <p>Types: {{ pokemonBody.type }}</p>
             </div>
           </div>
-          <button label="Share to my friends"/>
+          <button label="Share to my friends" />
         </div>
       </div>
     </div>
@@ -29,13 +30,14 @@
 </template>
 
 <script>
-import Button from './Button.vue'
+import Button from "./Button.vue";
+import { pokemons } from "../config/pokemons";
 import { mapGetters } from "vuex";
 
 export default {
   name: "ModalCustomComponent",
   components: {
-    Button
+    Button,
   },
   props: {
     pokemon: String,
@@ -64,6 +66,29 @@ export default {
     ...mapGetters({
       currentPokemon: "GET_POKEMON_DETAILS",
     }),
+    pokemonImagen() {
+      for (const pokemon in pokemons) {
+        if (pokemons.hasOwnProperty(pokemon)) {
+          if (pokemon === this.currentPokemon.name)
+            return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemons[pokemon]}.png`;
+        }
+      }
+    },
+    pokemonBody() {
+      let name = this.currentPokemon.name.charAt(0).toUpperCase() + this.currentPokemon.name.slice(1);
+      let type = this.currentPokemon.types[0].type.name.charAt(0).toUpperCase() + this.currentPokemon.types[0].type.name.slice(1);
+      let weight = this.currentPokemon.weight;
+      let height = this.currentPokemon.height;
+
+      let pokemon = {
+        name: name,
+        weight: weight,
+        height: height,
+        type: type
+      }
+
+      return pokemon
+    },
   },
   methods: {
     onClose() {
@@ -163,6 +188,7 @@ export default {
 div.close-container {
   text-align: right;
   position: absolute;
+  z-index: 3;
   right: 40px;
   top: 40px;
 }
@@ -288,5 +314,18 @@ div.close-container i {
 .button {
   width: 145px;
   height: 60px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+}
+.pokemon {
+  z-index: 3;
+  position: absolute;
+}
+.fondo {
+  z-index: 1;
+  position: relative;
 }
 </style>
