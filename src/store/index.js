@@ -87,7 +87,7 @@ export default createStore({
       axios
         .get(`${payload.url}`)
         .then((response) => {
-          let pokemon = response.data;
+          let pokemon = response.data;          
           pokemon = {
             abilities: pokemon.abilities,
             height: pokemon.height,

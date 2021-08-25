@@ -12,7 +12,7 @@
     :body-scroll="true"
     @close="onClose"
     :show="show"
-    :doSomething="onClose"
+    :foodRange="show"
     :pokemon="pokemon"
   />
   </div>  

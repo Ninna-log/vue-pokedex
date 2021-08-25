@@ -14,23 +14,28 @@
           <div class="modal-content">
             <div class="modal-body">
               <div class="name">
-                <img src="@/assets/0.png" alt="name" />
+                <img src="@/assets/pokeballs/poke-ball.png" alt="name" />
                 <p>Name: {{ pokemonBody.name }}</p>
               </div>
               <hr />
               <div class="weight">
-                <img src="@/assets/weight.png" alt="weight" />
+                <img src="@/assets/power-herb.png" alt="weight" />
                 <p>Weight: {{ pokemonBody.weight }}</p>
               </div>
               <hr />
               <div class="height">
-                <img src="@/assets/height.png" alt="height" />
+                <img src="@/assets/scanner.png" alt="height" />
                 <p>Height: {{ pokemonBody.height }}</p>
               </div>
               <hr />
               <div class="types">
                 <img :src="type" alt="type" />
                 <p>Types: {{ pokemonBody.type }}</p>
+              </div>
+              <hr />
+              <div class="food">                
+                <p>Food: </p>
+                <img v-for="(foodie, index) in food" :key="index" :src="foodie" alt="food" />
               </div>
             </div>
           </div>
@@ -43,7 +48,7 @@
 
 <script>
 import Button from "./Button.vue";
-import { pokemons, types } from "../config/pokemons";
+import { pokemons, types, berries } from "../config/pokemons";
 import { mapGetters } from "vuex";
 
 export default {
@@ -65,6 +70,9 @@ export default {
   beforeUpdate() {
     if (this.show) {
       document.getElementsByTagName("html")[0].classList.add("lock-scroll");
+
+      let num = Math.floor((Math.random()*27) + 1);
+      berries.splice(num)
     }
   },
   mounted() {
@@ -87,8 +95,11 @@ export default {
       }
     },
     type() {
-      let str = `@/assets/types/air.png`
-      return str
+      for (const type in types) {
+        if (type == this.currentPokemon.types[0].type.name) {
+          return `${types[type]}`
+        }        
+      }
     },
     pokemonBody() {
       let name =
@@ -109,6 +120,11 @@ export default {
 
       return pokemon;
     },
+    food() {
+      let num = Math.floor((Math.random()*27) + 1);
+      berries.splice(num)
+      return berries
+    }
   },
   methods: {
     onClose() {
@@ -130,6 +146,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   transition: opacity 0.3s ease;
+  overflow: auto;
   justify-content: center;
 }
 
@@ -257,17 +274,31 @@ div.close-container i {
   z-index: 1;
   position: relative;
 }
+div.types img {
+  width: 30px;
+}
+
+div.food img {
+  width: 25px;
+}
+
 div.name,
 div.weight,
 div.height,
-div.types {
+div.types,
+div.food {
   display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
-div.name img,
-div.weight img,
-div.height img,
-div.types img {
-  width: 40px;
+
+div.name p,
+div.weight p,
+div.height p,
+div.types p,
+div.food p {
+  margin-bottom: inherit;
+  padding-left: 8px;
 }
 
 </style>
