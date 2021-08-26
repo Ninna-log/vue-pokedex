@@ -2,9 +2,10 @@
   <button 
       class="button"
       type="button"
-      v-bind:style="{ backgroundColor: color, width: width, height: height }"
+      v-bind:style="{ backgroundColor: color, width: width, height: height }"      
       :value="label"      
-  > {{ label }} </button>
+  > {{ label }} 
+  </button>
 </template>
 
 <script>

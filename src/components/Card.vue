@@ -67,6 +67,10 @@ export default {
   align-items: center;
 }
 
+.col h2{
+  font-size: 1.1rem;
+}
+
 .col img:nth-child(1) {
   z-index: -1;
 }

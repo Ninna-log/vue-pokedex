@@ -18,7 +18,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: rgb(241 241 241);
 }
 
-@import'~bootstrap/dist/css/bootstrap.css'
+html {
+  background-color: rgb(241 241 241);
+}
 </style>

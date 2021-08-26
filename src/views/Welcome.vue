@@ -82,6 +82,6 @@ export default {
 }
 .button {
   width: 145px;
-  height: 60px;
+  height: 60px;  
 }
 </style>
