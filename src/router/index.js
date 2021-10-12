@@ -15,11 +15,6 @@ const routes = [
     name: 'List',
     component: List
   },
-  // {
-  //   path: '/pokemons/:id',
-  //   name: 'PokemonDetails',
-  //   component: PokemonDetails
-  // },
   {
     path: '/error-list-result',
     name: 'MensajeError',

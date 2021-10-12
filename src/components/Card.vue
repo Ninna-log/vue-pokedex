@@ -4,8 +4,8 @@
       <div class="col">
         <h2>{{ pokemonName }}</h2>
       </div>
-      <div class="col">
-        <img src="@/assets/vector.png" alt="vector" />
+      <div class="col" @click="makeFavorite(pokemon)">
+        <i class="fas fa-star" id="non-active"></i>
       </div>
     </div>
     <modal
@@ -18,6 +18,7 @@
   </div>  
 </template>
 <script>
+import { mapGetters } from "vuex";
 import Modal from "./Modal.vue"
 export default {
   name: "Card",
@@ -33,10 +34,13 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      favorites: "GET_FAVORITES"
+    }),
     pokemonName() {
       let str2 = this.pokemon.charAt(0).toUpperCase() + this.pokemon.slice(1);
       return str2;
-    },
+    }
   },
   methods: {
     onOpen() {
@@ -45,6 +49,10 @@ export default {
     onClose() {
       this.show = !this.show;
     },
+    makeFavorite(pokemon) {
+      document.getElementById("non-active").style.color('yellow')
+      this.$store.dispatch("DO_SAVE_FAVORITE_POKEMON", pokemon);
+    }
   },
 };
 </script>

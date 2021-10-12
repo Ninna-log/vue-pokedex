@@ -1,6 +1,3 @@
-/**
- * Configuración global de mutations
- */
  export const ON_ROUTE = "ON_ROUTE"
  export const ON_ERROR = "ON_ERROR"
  export const ON_CLEAR_SEARCH = "ON_CLEAR_SEARCH"
@@ -8,3 +5,4 @@
  export const ON_SEARCH_POKEMON = "ON_SEARCH_POKEMON"
  export const ON_SHOW_POKEMON = "ON_SHOW_POKEMON"
  export const ON_IS_LOADING = "ON_IS_LOADING"
+ export const ON_SAVE_FAVORITE_POKEMON = "ON_SAVE_FAVORITE_POKEMON"

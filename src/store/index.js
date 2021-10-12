@@ -20,6 +20,7 @@ export default createStore({
       title: "Uh-oh!",
       subtitle: "There was an error!"
     },
+    favorites: [],
     genericError: false
   },
   mutations: {
@@ -40,6 +41,9 @@ export default createStore({
     },
     [MUTATIONS.ON_SHOW_POKEMON](state, payload) {
       state.pokemonDetails = payload;
+    },
+    [MUTATIONS.ON_SAVE_FAVORITE_POKEMON](state, payload) {
+      state.favorites.push(payload)
     }
   },
   actions: {
@@ -122,6 +126,9 @@ export default createStore({
           context.commit(MUTATIONS.ON_ERROR, true);
           console.log(error);
         });
+    },
+    [ACTIONS.DO_SAVE_FAVORITE_POKEMON](context, payload) {
+      context.commit(MUTATIONS.ON_SAVE_FAVORITE_POKEMON, payload)
     }
   },
   getters: {
@@ -151,6 +158,9 @@ export default createStore({
     },
     GET_ERROR2: (state) => {
       return state.error.subtitle
+    },
+    GET_FAVORITES: (state) => {
+      return state.favorites
     }
   },
   modules: {
