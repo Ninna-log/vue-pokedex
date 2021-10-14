@@ -1,19 +1,14 @@
 # pokedex
 
-## Project setup
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+https://user-images.githubusercontent.com/73908034/137235615-59da40f5-40f5-46b4-bd3b-1cd0a87be6b4.mp4
+
