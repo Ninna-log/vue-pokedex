@@ -8,28 +8,30 @@
       <h1 class="title">{{ title }}</h1>
       <h3 class="subtitle">{{ subtitle }}</h3>
     </div>
-    <button-app class="button" label="Get starterd" @click="getStarted"></button-app>
+    <button-app
+      class="button"
+      label="Get started"
+      @click="getStarted"
+    />
   </div>
 </template>
 
 <script>
-import ButtonApp from "@/components/Button"
-import { mapGetters } from 'vuex'
+import ButtonApp from "@/components/Button";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Welcome",
   data() {
-    return {
-
-    };
+    return {};
   },
   components: {
-    ButtonApp
+    ButtonApp,
   },
   computed: {
-    ...mapGetters({    
-        title: 'GET_TITLE',
-        subtitle: 'GET_SUBTITLE'
+    ...mapGetters({
+      title: "GET_TITLE",
+      subtitle: "GET_SUBTITLE",
     }),
   },
   methods: {
@@ -82,6 +84,6 @@ export default {
 }
 .button {
   width: 145px;
-  height: 60px;  
+  height: 60px;
 }
 </style>

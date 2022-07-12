@@ -6,8 +6,7 @@
       class="button" 
       label="Go back home"
       @click="goBack()"
-    >
-    </button-app>
+    />
   </div>  
 </template>
 

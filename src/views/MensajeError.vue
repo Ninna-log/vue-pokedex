@@ -1,6 +1,6 @@
 <template>
   <div>
-    <search-bar></search-bar>
+    <search-bar/>
     <h1>{{ title }}</h1>
     <h3>{{ subtitle }}</h3>
   </div>
